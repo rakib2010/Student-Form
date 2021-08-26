@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <style>
+        .container{
+            
+            
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <h1>Student Information</h1>
+                    <label for="student_name" class="form-label">NAME</label>
+                    <input type="text" class="form-control" id="stname" rows="3" placeholder="Enter Your Name"></input>
+                <div>
+                
+                <div class="form-group">
+                    <label for="student_id" class="form-label">ID</label>
+                    <input type="number" class="form-control" id="stid" rows="3" placeholder="Enter Your ID"></input>
+
+                <div >
+                    <button id="newbtn" class="btn btn-primary mt-3" onclick="add()">Add new Student </button>
+                
+                
+                
+                
+            </div>
+
+        </div>
+        
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table class="table table-success table-striped">
+                        <thead class="table-info">
+                            <tr>
+                                <th>SL#</th>
+                                <th>Name</th>
+                                <th>ID</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="infobody">
+
+
+
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+       
+
+
+    
+
+    <script>
+        var stlist = [];
+        var stid = document.querySelector("#stid");
+        var stname = document.querySelector("#stname");
+        var newbtn = document.querySelector("#newbtn");
+        var infobody = document.querySelector("#infobody");
+        var currentindex = 0;
+
+        function add() {
+
+            var stobj = { name: stname.value, id: stid.value };
+
+            stlist.push(stobj);
+
+            stname.value = "";
+            stid.value = "";
+
+            generatebody();
+
+        }
+
+        function generatebody() {
+
+            infobody.innerHTML = "";
+
+
+
+            for (var i = 0; i < stlist.length; i++) {
+                var info = stlist[i];
+
+                var row = `
+                <td>${1 + i}</td>
+                <td>${info.name}</td>
+                <td>${info.id}</td>
+                <td><button onclick="update(${i})">Modify</button>
+                    <button onclick ="del(${i})">Delete</button>
+                    
+                    
+                    
+                    </td>
+                
+            
+            `;
+                infobody.innerHTML += row;
+
+            }
+
+
+        }
+
+        function update(i) {
+            currentindex = i;
+
+            var currentinfo = stlist[currentindex];
+
+            stname.value = currentinfo.name;
+            stid.value = currentinfo.id;
+
+            newbtn.innerHTML = "Update";
+            newbtn.onclick = updateinfo;
+
+
+
+
+        }
+
+        function updateinfo() {
+            var stobj = { name: stname.value, id: stid.value };
+
+            stlist[currentindex] = stobj;
+
+            stname.value = "";
+            stid.value = "";
+
+            newbtn.innerHTML = "Add New Student";
+            newbtn.onclick = add;
+
+            generatebody();
+
+
+
+
+
+        }
+
+        function del(i) {
+
+            debugger;
+            var dels = stlist[i];
+
+            stlist.splice(i, 1);
+            generatebody();
+
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
